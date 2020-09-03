@@ -50,43 +50,72 @@ void PreorderTraversal(BinaryTreeNode<int> *root)
 */
 
 // Using BFS LevelWise
+
+// void PreorderTraversal(BinaryTreeNode<int> *root)
+// {
+//     if (root == NULL)
+//         return;
+
+//     stack<BinaryTreeNode<int> *> s1;
+//     stack<BinaryTreeNode<int> *> s2;
+//     cout << root->data << " ";
+//     s1.push(root);
+//     while (!s1.empty())
+//     {
+//         BinaryTreeNode<int> *topper = s1.top();
+//         s1.pop();
+//         if (topper->left)
+//         {
+//             s1.push(topper->left);
+//             cout << topper->left->data << " ";
+//         }
+//         if (topper->right)
+//         {
+//             s2.push(topper->right);
+//         }
+//     }
+
+//     while (!s2.empty())
+//     {
+//         BinaryTreeNode<int> *topper = s2.top();
+//         s2.pop();
+//         cout << topper->data << " ";
+//         if (topper->right)
+//         {
+//             s2.push(topper->right);
+//         }
+//         if (topper->left)
+//         {
+//             s2.push(topper->left);
+//         }
+//     }
+// }
+
 void PreorderTraversal(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
         return;
-
-    stack<BinaryTreeNode<int> *> s1;
-    stack<BinaryTreeNode<int> *> s2;
-    cout << root->data << " ";
-    s1.push(root);
-    while (!s1.empty())
+    unordered_map<BinaryTreeNode<int> *, int> mp;
+    stack<BinaryTreeNode<int> *> s;
+    s.push(root);
+    while (!s.empty())
     {
-        BinaryTreeNode<int> *topper = s1.top();
-        s1.pop();
-        if (topper->left)
+        BinaryTreeNode<int> *front = s.top();
+        if (front == NULL)
         {
-            s1.push(topper->left);
-            cout << topper->left->data << " ";
+            s.pop();
+            continue;
         }
-        if (topper->right)
-        {
-            s2.push(topper->right);
-        }
-    }
+        if (mp[front] == 0)
+            cout << front->data << " ";
+        else if (mp[front] == 1)
+            s.push(front->left);
+        else if (mp[front] == 2)
+            s.push(front->right);
+        else
+            s.pop();
 
-    while (!s2.empty())
-    {
-        BinaryTreeNode<int> *topper = s2.top();
-        s2.pop();
-        cout << topper->data << " ";
-        if (topper->right)
-        {
-            s2.push(topper->right);
-        }
-        if (topper->left)
-        {
-            s2.push(topper->left);
-        }
+        mp[front]++;
     }
 }
 

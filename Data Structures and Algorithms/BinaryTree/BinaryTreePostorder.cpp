@@ -50,32 +50,62 @@ void Postorder(BinaryTreeNode<int> *root)
 */
 
 // Using BFS--> Iterative
+
+// void Postorder(BinaryTreeNode<int> *root)
+// {
+//     if (root == NULL)
+//         return;
+//     stack<BinaryTreeNode<int> *> s1;
+//     s1.push(root);
+//     stack<BinaryTreeNode<int> *> s2;
+//     while (!s1.empty())
+//     {
+//         BinaryTreeNode<int> *topper = s1.top();
+//         s2.push(topper);
+//         s1.pop();
+//         if (topper->left)
+//         {
+//             s1.push(topper->left);
+//         }
+//         if (topper->right)
+//         {
+//             s1.push(topper->right);
+//         }
+//     }
+
+//     while (!s2.empty())
+//     {
+//         cout << s2.top()->data << " ";
+//         s2.pop();
+//     }
+// }
+
+// Using 1 stack
 void Postorder(BinaryTreeNode<int> *root)
 {
     if (root == NULL)
         return;
-    stack<BinaryTreeNode<int> *> s1;
-    s1.push(root);
-    stack<BinaryTreeNode<int> *> s2;
-    while (!s1.empty())
+    unordered_map<BinaryTreeNode<int> *, int> mp;
+    stack<BinaryTreeNode<int> *> s;
+    s.push(root);
+    while (!s.empty())
     {
-        BinaryTreeNode<int> *topper = s1.top();
-        s2.push(topper);
-        s1.pop();
-        if (topper->left)
+        BinaryTreeNode<int> *front = s.top();
+        if (front == NULL)
         {
-            s1.push(topper->left);
+            s.pop();
+            continue;
         }
-        if (topper->right)
-        {
-            s1.push(topper->right);
-        }
-    }
+        if (mp[front] == 0)
+            s.push(front->left);
+        else if (mp[front] == 1)
+            s.push(front->right);
+        else if (mp[front] == 2)
+            cout << front->data << " ";
+        else
+            s.pop();
 
-    while (!s2.empty())
-    {
-        cout << s2.top()->data << " ";
-        s2.pop();
+        mp[front]++;
     }
 }
 
