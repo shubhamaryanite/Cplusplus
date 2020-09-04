@@ -113,6 +113,7 @@ void nodesSumToS(BinaryTreeNode<int> *root, int sum)
     }
     nodesSumToS(root->right, sum);
 }
+
 int main()
 {
     BinaryTreeNode<int> *root = takeInput();
